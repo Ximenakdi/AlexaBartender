@@ -39,6 +39,60 @@ const NameIntentHandler = {
     }
 };
 
+const vodkaCHandler = {
+    canHandle(handlerInput) {
+        console.log(`Tu intent fue: ${Alexa.getIntentName(handlerInput.requestEnvelope)}`)
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'Vodka';
+    },
+    handle(handlerInput) {
+        const speakOutput = 'Ahí te va tu vodka guapo';
+
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(speakOutput)
+            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .getResponse();
+    }
+};
+const tequilaCHandler = {
+    canHandle(handlerInput) {
+        console.log(`Tu intent fue: ${Alexa.getIntentName(handlerInput.requestEnvelope)}`)
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'Tequila';
+    },
+    handle(handlerInput) {
+        const speakOutput = 'Ahí te va tu palomita';
+
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(speakOutput)
+            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .getResponse();
+    }
+};
+const cubaCHandler = {
+    canHandle(handlerInput) {
+        console.log(`Tu intent fue: ${Alexa.getIntentName(handlerInput.requestEnvelope)}`)
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'Cuba';
+    },
+    handle(handlerInput) {
+        const intent = handlerInput.requestEnvelope.request.intent;
+        console.log(`This is the intent ${JSON.stringify(intent)}`)
+        const speakOutput = '¿Qué tan cargada la quieres?';
+
+
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt('Ahí te va tu cubaibi')
+            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .getResponse();
+
+    }
+};
+
+
 const HelpIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -61,8 +115,8 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'Adíos pinche alcohólico, ojalá tu higado perezca pronto uwu!';
-
+        //const speakOutput = 'Adíos pinche alcohólico, ojalá tu higado perezca pronto uwu!';
+        const speakOutput = 'Adíos te amo uwu'
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .getResponse();
@@ -103,6 +157,9 @@ const IntentReflectorHandler = {
             .getResponse();
     }
 };
+
+
+
 /**
  * Generic error handling to capture any syntax or routing errors. If you receive an error
  * stating the request handler chain is not found, you have not implemented a handler for
@@ -132,6 +189,9 @@ const SkillBuilder = Alexa.SkillBuilders.custom()
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
+        cubaCHandler,
+        tequilaCHandler,
+        vodkaCHandler
     )
     .addErrorHandlers(
         ErrorHandler
